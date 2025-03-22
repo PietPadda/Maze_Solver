@@ -38,5 +38,36 @@ class Window:
         self.__running = False  # set window running flag false
 
 
+    # Draw a line in the window
+    # takes a Line instance and fill colour (str)
+    # set default colour as black
+    def draw_line(self, line, fill_colour="black"):
+        # Pass our canvas and the fill color to the line's draw method
+        line.draw(self.__canvas, fill_colour)  # call draw on the line instance
+
+
+# Generate points w x & y coords
+# x=0 left of screen, y=0 top of screen
+class Point: 
+    def __init__(self, x, y): 
+        self.x = x  # point x coord
+        self.y = y  # point y coord
+
+
+# Generate line of 2 input points
+class Line: 
+    def __init__(self, point1, point2): 
+        self.point1 = point1  # point1 of line
+        self.point2 = point2  # point2 of line
 
     
+    # method to draw colour using canvas and colour (str)
+    def draw(self, canvas, fill_colour):
+        # Get coordinates of each point
+        p1_x = self.point1.x  # point1 x coord
+        p1_y = self.point1.y  # point1 y coord
+        p2_x = self.point2.x  # point2 x coord
+        p2_y = self.point2.y  # point2 y coord
+        # Use Canvas's create_line() method:
+        # x&y coords of each point, fill colour, line width
+        canvas.create_line(p1_x, p1_y, p2_x, p2_y, fill=fill_colour, width=2)

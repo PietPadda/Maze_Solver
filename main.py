@@ -29,7 +29,12 @@ def main():
     cell4 = Cell(win)
     cell4.has_left_wall = False
     cell4.draw(100,100,150,150)
-    
+
+    # Draw a cell centre lines to test
+    cell1.draw_move(cell2)
+    cell2.draw_move(cell4, undo=True)
+    cell4.draw_move(cell3)
+
     # Wait to close
     win.wait_for_close()  # close it on call of this method
 

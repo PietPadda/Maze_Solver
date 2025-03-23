@@ -24,6 +24,7 @@ class Maze:
         self._win = win  # window objt where maze is drawn
 
         self._create_cells()  # calls the cell creation method
+        self._break_entrance_and_exit()  # create enter/exit cells
 
     # fills all cells
     # were drawing left to right
@@ -73,3 +74,21 @@ class Maze:
             return
         self._win.redraw()  # redraw the window
         time.sleep(0.03)  # pause Xs between draw frames
+
+
+    # always entrance topleft, exit bottom right
+    # remove outerwall to each
+    def _break_entrance_and_exit(self):
+        enter_cell = self._cells[0][0]  # topleft has matrix index 0 for x & y
+        exit_cell = self._cells[self._num_cols - 1][self._num_rows - 1]  # botright has matrix index #row/col - 1 (index starts @ 0)
+
+        # Remove left wall from entrance and redraw the cell
+        enter_cell.has_left_wall = False  # set entrance left wall to not draw
+        self._draw_cell(0, 0)  # REDRAW the entrance cell
+
+        # Remove right wall from exit and redraw the cell
+        exit_cell.has_right_wall = False  # set exit right wall to not draw
+        self._draw_cell(self._num_cols - 1, self._num_rows - 1)  # REDRAW the exit cell
+
+        # Animate the drawing process
+        self._animate()

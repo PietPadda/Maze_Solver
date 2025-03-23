@@ -32,6 +32,13 @@ class Cell:
             p2 = Point(self.__x1, self.__y2)  # bottom left
             line = Line(p1, p2)  # line between points
             self.__win.draw_line(line, "green")  # draw wall, set green
+        else:  # if wall is set to False...
+            # points
+            p1 = Point(self.__x1, self.__y1)
+            p2 = Point(self.__x1, self.__y2)
+            line = Line(p1, p2)
+            self.__win.draw_line(line, "white")  # FORCE WHITE DRAW (match background)
+
         # Right wall check
         if self.has_right_wall:
             # points
@@ -39,6 +46,13 @@ class Cell:
             p2 = Point(self.__x2, self.__y2)  # bottom right
             line = Line(p1, p2)  # line between points
             self.__win.draw_line(line, "red")  # draw wall, set red
+        else:  # if wall is set to False...
+            # points
+            p1 = Point(self.__x2, self.__y1)
+            p2 = Point(self.__x2, self.__y2)
+            line = Line(p1, p2)
+            self.__win.draw_line(line, "white")  # FORCE WHITE DRAW (match background)
+
         # Top wall check
         if self.has_top_wall:
             # points
@@ -46,6 +60,13 @@ class Cell:
             p2 = Point(self.__x2, self.__y1)  # top tight
             line = Line(p1, p2)  # line between points
             self.__win.draw_line(line, "blue")  # draw wall, set blue
+        else:  # if wall is set to False...
+            # points
+            p1 = Point(self.__x1, self.__y1)
+            p2 = Point(self.__x2, self.__y1)
+            line = Line(p1, p2)
+            self.__win.draw_line(line, "white")  # FORCE WHITE DRAW (match background)
+
         # Bottom wall check
         if self.has_bottom_wall:
             # points
@@ -53,6 +74,13 @@ class Cell:
             p2 = Point(self.__x2, self.__y2)  # bottom tight
             line = Line(p1, p2)  # line between points
             self.__win.draw_line(line, "purple")  # draw wall, set purple
+        else:  # if wall is set to False...
+            # points
+            p1 = Point(self.__x1, self.__y2)
+            p2 = Point(self.__x2, self.__y2)
+            line = Line(p1, p2)
+            self.__win.draw_line(line, "white")  # FORCE WHITE DRAW (match background)
+
 
     # draw lines in centre of 1 cell to another
     # if undo False, must be red, otherwise it's gray

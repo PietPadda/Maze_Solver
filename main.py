@@ -1,6 +1,6 @@
 # MAIN.PY
 from graphics import Window, Point, Line  # import the graphics classes
-from maze import Maze  # import the cell class
+from maze import Maze  # import the maze class
 
 
 
@@ -25,7 +25,8 @@ def main():
                 num_cols,
                 cell_size_x,
                 cell_size_y,
-                win)
+                win,
+                10)  # Fixed Seed
 
     # Wait to close
     win.wait_for_close()  # close it on call of this method

@@ -1,6 +1,7 @@
 # MAZE.PY
 from cell import Cell  # import the Cell class
 import time  # for time.sleep()
+import random  # for random.seed, random etc
 
 # holds all the cells in a 2d grid
 class Maze: 
@@ -13,6 +14,7 @@ class Maze:
             cell_size_x,
             cell_size_y,
             win,
+            seed=None
         ):
         self._cells = []  # initiate cell list to be filled
         self._x1 = x1  # x coord of topleft of maze
@@ -22,9 +24,14 @@ class Maze:
         self._cell_size_x = cell_size_x  # width of each cell in pixels
         self._cell_size_y = cell_size_y  # height of each cell in pixels
         self._win = win  # window objt where maze is drawn
+        if seed:  # if seed True
+            random.seed(seed)  # randomise it
+        # a FIXED seed ensures we always get the same "random" numbers (helps with debugging)
 
         self._create_cells()  # calls the cell creation method
         self._break_entrance_and_exit()  # create enter/exit cells
+        self._break_walls_r(0, 0)  # break walls inside the maze
+
 
     # fills all cells
     # were drawing left to right
@@ -92,3 +99,69 @@ class Maze:
 
         # Animate the drawing process
         self._animate()
+
+
+    # our DFS algorithm for breaking walls
+    # i = column, j = row
+    def _break_walls_r(self, i, j):
+        # Mark the current cell as visited
+        self._cells[i][j].visited = True
+
+        # start an infinite loop
+        while True:
+            to_visit = []  # empty list of neighbours to visit
+
+            # Get the neighbours
+            # First we'll define traversal directions in the 2D-grid
+            directions = [(-1, 0),  # Left
+                            (1, 0),   # Right
+                            (0, -1),  # Up
+                            (0, 1)]   # Down
+            
+            # Defining each cell's position in direction to search
+            for direction in directions:  # for each direction
+                neighb_i = i + direction[0]  # neighbour column
+                neighb_j = j + direction[1]  # neighbour row
+
+                # Check if this neighbour is valid and unvisited
+                if (neighb_i >= 0 and neighb_i < self._num_cols and   # check if in valid col number of maze
+                    neighb_j >= 0 and neighb_j < self._num_rows and   # check if in valid row number of maze
+                    not self._cells[neighb_i][neighb_j].visited):     # check if has been visited
+                    to_visit.append((neighb_i, neighb_j))  # add to list if valid and not visited
+
+            # If there are not available directions, draw the current cell and break out of loop
+            if not to_visit:           # if list empty
+                self._draw_cell(i, j)  # draw the current cell
+                return                 # early return to exit the loop (Note: break would kill recursion...)
+            
+            # If there are available neighbours, randomly choose one
+            target_cell_index = random.randrange(len(to_visit))  # choose random index from to_vist
+            target_cell_coord = to_visit[target_cell_index]  # get the coordinates for that index value
+
+            # Now need to break out the wall
+            target_i = target_cell_coord[0]  # get target cell's col
+            target_j = target_cell_coord[1]  # get target cell's row
+
+            # Left neighbour break check
+            if target_i == i - 1:  # if target is to left of current
+                self._cells[i][j].has_left_wall = False  # remove current cell's left wall
+                self._cells[target_i][target_j].has_right_wall = False  # remove target's right
+
+            # Right neighbour break check
+            if target_i == i + 1:  # if target is to right of current
+                self._cells[i][j].has_right_wall = False  # remove current cell's right wall
+                self._cells[target_i][target_j].has_left_wall = False  # remove target's left
+
+            # Up neighbour break check
+            if target_j == j - 1:  # if target is above current
+                self._cells[i][j].has_top_wall = False  # remove current cell's top wall
+                self._cells[target_i][target_j].has_bottom_wall = False  # remove target's bottom
+
+            # Down neighbour break check
+            if target_j == j + 1:  # if target is below current
+                self._cells[i][j].has_bottom_wall = False  # remove current cell's bottom wall
+                self._cells[target_i][target_j].has_top_wall = False  # remove target's top
+
+            # Finally, move to target cell by recursively calling the method
+            self._break_walls_r(target_i, target_j)
+

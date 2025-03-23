@@ -72,4 +72,4 @@ class Maze:
         if self._win is None:
             return
         self._win.redraw()  # redraw the window
-        time.sleep(0.05)  # pause 0.05s
+        time.sleep(0.03)  # pause Xs between draw frames

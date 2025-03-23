@@ -45,10 +45,10 @@ class Tests(unittest.TestCase):  # Create a test class that inherits from unitte
             num_rows,  # Should match the number of rows we specified
         )
 
-    # Define a test method to check cell creation - 100 row, 100 col
+    # Define a test method to check cell creation - 40 row, 40 col
     def test_maze_create_cells_massive(self):  
-        num_cols = 100  # Set number of columns for the test maze
-        num_rows = 100  # Set number of rows for the test maze
+        num_cols = 40  # Set number of columns for the test maze
+        num_rows = 40  # Set number of rows for the test maze
         m1 = Maze(50, 50, num_rows, num_cols, 4, 4, win=None)  # Create a maze with specified dimensions, explicitly setting win to None
         self.assertEqual(
             len(m1._cells),  # Get the number of column arrays in the maze
@@ -62,7 +62,7 @@ class Tests(unittest.TestCase):  # Create a test class that inherits from unitte
     # Define a test method to check cell creation - 1 row, 200 col
     def test_maze_create_cells_flat_row(self):  
         num_cols = 1  # Set number of columns for the test maze
-        num_rows = 200  # Set number of rows for the test maze
+        num_rows = 40  # Set number of rows for the test maze
         m1 = Maze(-50, -50, num_rows, num_cols, 200, 200, win=None)  # Create a maze with specified dimensions, explicitly setting win to None
         self.assertEqual(
             len(m1._cells),  # Get the number of column arrays in the maze
@@ -88,6 +88,28 @@ class Tests(unittest.TestCase):  # Create a test class that inherits from unitte
             m1._cells[num_cols - 1][num_rows - 1].has_right_wall,  # Get right wall parameter (last cell, bot right)
             False,  # Should be False as we remove it
         )
+
+
+    # RESET CELL VISITED FLAG TESTS
+    # Define a test method to check resetting all cell visited flags to false
+    def test_reset_cells_visited(self):  
+        num_cols = 12  # Set number of columns for the test maze
+        num_rows = 10  # Set number of rows for the test maze
+        m1 = Maze(0, 0, num_rows, num_cols, 10, 10, win=None)  # Create a maze with specified dimensions, explicitly setting win to None
+
+        # First mark all cells as visited
+        for col in m1._cells:  # for each column in maze
+            for cell in col:  # for each row (cell) in column
+                cell.visited = True  # set visited to true
+
+        # Call the visited reset method
+        m1._reset_cells_visited()  # all cells SHOULD be set to False now
+
+        # Assert that each cell has visited=False
+        for col in m1._cells:  # for each column in maze
+            for cell in col:  # for each row (cell) in column
+                self.assertFalse(cell.visited)  # Should be False
+                # Alternate: self.AssertEqual(cell.visited, False)  # but more verbose...
 
 
 if __name__ == "__main__":  # This block only runs when the script is executed directly

@@ -31,6 +31,7 @@ class Maze:
         self._create_cells()  # calls the cell creation method
         self._break_entrance_and_exit()  # create enter/exit cells
         self._break_walls_r(0, 0)  # break walls inside the maze
+        self._reset_cells_visited()  # resets visited flag to allow solving maze after
 
 
     # fills all cells
@@ -165,3 +166,9 @@ class Maze:
             # Finally, move to target cell by recursively calling the method
             self._break_walls_r(target_i, target_j)
 
+
+    # resets all cells visited flag to False -- allows running again when solving the maze
+    def _reset_cells_visited(self):
+        for col in self._cells:  # for each column in the maze's cells
+            for cell in col:  # for each row (cell) in each column 
+                cell.visited = False  # set it to not visited

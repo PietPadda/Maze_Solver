@@ -32,7 +32,7 @@ class Cell:
             p1 = Point(self.__x1, self.__y1)  # top left
             p2 = Point(self.__x1, self.__y2)  # bottom left
             line = Line(p1, p2)  # line between points
-            self.__win.draw_line(line, "green")  # draw wall, set green
+            self.__win.draw_line(line)  # draw wall, DEFAULT BLACK
         else:  # if wall is set to False...
             # points
             p1 = Point(self.__x1, self.__y1)
@@ -46,7 +46,7 @@ class Cell:
             p1 = Point(self.__x2, self.__y1)  # top right
             p2 = Point(self.__x2, self.__y2)  # bottom right
             line = Line(p1, p2)  # line between points
-            self.__win.draw_line(line, "red")  # draw wall, set red
+            self.__win.draw_line(line)  # draw wall, DEFAULT BLACK
         else:  # if wall is set to False...
             # points
             p1 = Point(self.__x2, self.__y1)
@@ -60,7 +60,7 @@ class Cell:
             p1 = Point(self.__x1, self.__y1)  # top left
             p2 = Point(self.__x2, self.__y1)  # top tight
             line = Line(p1, p2)  # line between points
-            self.__win.draw_line(line, "blue")  # draw wall, set blue
+            self.__win.draw_line(line)  # draw wall, DEFAULT BLACK
         else:  # if wall is set to False...
             # points
             p1 = Point(self.__x1, self.__y1)
@@ -74,7 +74,7 @@ class Cell:
             p1 = Point(self.__x1, self.__y2)  # bottom left
             p2 = Point(self.__x2, self.__y2)  # bottom tight
             line = Line(p1, p2)  # line between points
-            self.__win.draw_line(line, "purple")  # draw wall, set purple
+            self.__win.draw_line(line)  # draw wall, DEFAULT BLACK
         else:  # if wall is set to False...
             # points
             p1 = Point(self.__x1, self.__y2)
